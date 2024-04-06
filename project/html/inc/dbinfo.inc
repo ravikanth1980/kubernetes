@@ -1,6 +1,6 @@
 <?php
 
-define('DB_SERVER', "52.40.2.25");
+define('DB_SERVER', "54.149.204.45");
 
 define('DB_USERNAME', 'rdsuser123');
 

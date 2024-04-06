@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mywebapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mywebapp
+  template:
+    metadata:
+      labels:
+        app: mywebapp
+    spec:
+      containers:
+      - name: web
+        image: 1980ravi/project_web:2.0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: db-info
+          mountPath: /var/www/html/inc
+      volumes:
+      - name: db-info
+        configMap:
+          name: db-info-configmap
+

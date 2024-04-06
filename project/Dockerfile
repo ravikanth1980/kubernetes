@@ -12,4 +12,4 @@ COPY apache2.conf /etc/apache2/apache2.conf
 RUN a2enmod rewrite
 
 # Copy your PHP application files into the container
-#COPY . /var/www/html/
+COPY SamplePage.php /var/www/html/

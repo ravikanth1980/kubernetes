@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mywebapp-pv
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /var/www/html # Replace with the host path where your HTML files are located
+
