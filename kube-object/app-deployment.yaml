@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: example-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      serviceAccountName: default
+      initContainers:
+        - name: volume-permissions
+          image: busybox
+          #command: ["sh", "-c", "chown -R nginx:nginx /usr/share/nginx/html"
+          command: ["sh", "-c", "chmod -R 777 /usr/share/nginx/html"]
+          volumeMounts:
+            - name: app-storage
+              mountPath: /usr/share/nginx/html  
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: app-storage
+              mountPath: /usr/share/nginx/html
+            - name: nginx-index-html
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+              readOnly: true  
+      securityContext:
+        fsGroup: 101
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: app-pvc
+        - name: nginx-index-html
+          configMap:
+            name: nginx-index-html
+
+

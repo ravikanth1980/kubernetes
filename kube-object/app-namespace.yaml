@@ -1,0 +1,11 @@
+#apiversion : v1
+#Kind: Namespace
+#Metadata:
+#   name : example-namespace   
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example-namespace
+
+
